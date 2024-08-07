@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .referral-link {
+            margin: 20px 0;
+        }
+        .referral-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .referral-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Referral Dashboard</h1>
+        <div class="referral-link">
+            <p>Your referral link:</p>
+            <p id="referral-link">Loading...</p>
+        </div>
+        <div id="referral-stats">
+            <p>Loading referral stats...</p>
+        </div>
+    </div>
+
+    <script>
+        // Fetch user referral link and stats
+        async function fetchReferralData() {
+            const response = await fetch('/api/referral');
+            const data = await response.json();
+
+            if (data.referralLink) {
+                document.getElementById('referral-link').innerHTML = `<a href="${data.referralLink}" target="_blank">${data.referralLink}</a>`;
+            }
+            
+            if (data.referrals) {
+                document.getElementById('referral-stats').innerHTML = `<p>Total referrals: ${data.referrals}</p>`;
+            }
+        }
+
+        fetchReferralData();
+    </script>
+</body>
+</html>
